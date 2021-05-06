@@ -1,0 +1,69 @@
+CREATE TABLE INSTITUCION (
+idInstitucion bigint,
+nombre text,
+Abreviacion text,
+PRIMARY KEY (idInstitucion, nombre)
+) WITH CLUSTERING ORDER BY (nombre DESC);
+
+CREATE TABLE CUENTAHABIENTE (
+DPI bigint,
+nombre text,
+apellido text,
+telefono int,
+sexo text, 
+Email text,
+PRIMARY KEY (DPI, nombre)
+) WITH CLUSTERING ORDER BY (nombre DESC);
+
+CREATE TABLE CUENTA(
+idCuenta bigint,
+Tipo text,
+Saldo int,
+fechaApertura timestamp,
+PRIMARY KEY ((idCuenta), fechaApertura)
+) WITH CLUSTERING ORDER BY (fechaApertura DESC);
+
+CREATE TABLE CLIENTE_CUENTA(
+idCuenta bigint,
+tipoCuenta text,
+idCliente bigint,
+nombreCliente text,
+nombreInstitucion text,
+saldoCuenta bigint,
+PRIMARY KEY ((idCuenta, idCliente), tipoCuenta)
+)WITH CLUSTERING ORDER BY (tipoCuenta DESC);
+
+CREATE TABLE TRANSACCION(
+idTransaccion bigint,
+fechaCreacion timestamp,
+fechaOperacion timestamp,
+tipo text,
+nombreCliente text,
+monto bigint,
+observacion text,
+descripcion text,
+estado text,
+PRIMARY KEY ((idTransaccion), fechaCreacion, fechaOperacion)
+)WITH CLUSTERING ORDER BY (fechaCreacion DESC, fechaOperacion DESC);
+
+CREATE TABLE CUENTA_INSTITUCION(
+idcuenta bigint,
+tipoCuenta text,
+nombreInstitucion text,
+saldoCuenta bigint, 
+PRIMARY KEY((idcuenta, nombreInstitucion), tipoCuenta)
+)WITH CLUSTERING ORDER BY (tipoCuenta DESC);
+
+CREATE TABLE TRANSACCIONES(
+idTransaccion bigint,
+fechaDebito timestamp,
+fechaCredito timestamp,
+idCuentaDebito bigint,
+idCuentaCredito bigint,
+tipoCuentaDebito text,
+tipoCuentaCredito text,
+nombreInstitucionDebito text,
+nombreInstitucionCredito text,
+monto bigint,
+PRIMARY KEY((idTransaccion), fechaDebito, fechaCredito)
+)WITH CLUSTERING ORDER BY (fechaDebito DESC, fechaCredito DESC);
